@@ -1,21 +1,10 @@
-'use client';
+import ShoppingCartList from "./ShoppingCartList";
 
-import { useState } from "react";
-import { products } from "../product-data";
-import Link from "next/link";
-export default function CartPage(){
-    const [cartIds, setCardIds] = useState(['123','345']);
-    const cartProducts = cartIds.map(id => products.find(p=> p.id===id)!);
+export default async function CartPage(){
+    const response = await fetch('https://special-spoon-pgvpvx7q66rc7596-3000.app.github.dev/api/users/2/cart');
+    const cartProducts = await response.json();
 
     return (
-        <>
-        <h1>Cart</h1>
-        {cartProducts.map(product =>(
-            <Link key={product.id} href={"/products/" + product.id}>
-                <h3>{product.name}</h3>
-                <p>${product.price}</p>
-            </Link>
-        ))}
-        </>
-    )
+        <ShoppingCartList inititalCartProducts={cartProducts}/>
+    );
 }

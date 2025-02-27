@@ -1,7 +1,10 @@
 import NotFoundPage from "@/app/not-found";
-import { products } from "@/app/product-data";
-export default function ProductDetailPage({ params } : { params : { id: string }}){
-    const product = products.find(p => p.id=== params.id)
+// import { products } from "@/app/product-data";
+export default async function ProductDetailPage({ params } : { params : { id: string }}){
+    // const product = products.find(p => p.id=== params.id)
+
+    const response = await fetch('https://special-spoon-pgvpvx7q66rc7596-3000.app.github.dev/api/products/' + params.id);
+    const product = await response.json();
 
     if(!product){
         return <NotFoundPage></NotFoundPage>

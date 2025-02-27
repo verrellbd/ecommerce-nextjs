@@ -30,9 +30,9 @@ export async function GET(request:NextRequest, {params}:{params:Params}) {
         });
     }
 
-    const cartIds = userCart.cartIds;
+    const cartIds = userCart.cartsIds;
     const cartProducts = await db.collection('products').find({ id: {$in:cartIds} }).toArray();
-
+    
     return new Response(JSON.stringify(cartProducts),{
         status:200,
         headers:{

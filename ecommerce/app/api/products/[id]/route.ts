@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { products } from "@/app/product-data";
+// import { products } from "@/app/product-data";
 import { connectToDb } from "../../db";
 
 type Params={
@@ -11,7 +11,7 @@ export async function GET(request:NextRequest, {params}:{params:Params}) {
     const productId = params.id;
 
     // Using MongoDB
-    const product = await db.collection('products').find({ id: productId });
+    const product = await db.collection('products').findOne({ id: productId });
 
     // Using static JSON product-data
     // const product = products.find(p=>p.id === productId);
