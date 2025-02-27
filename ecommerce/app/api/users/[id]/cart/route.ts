@@ -121,7 +121,7 @@ export async function DELETE(request:NextRequest, {params}:{params:Params}) {
         headers:{
             'Content-Type':'application/json'
         }
-    })
+    });
     // carts[userId] = carts[userId] ? carts[userId].filter(pid => pid != productId) : [];
     // const cartProducts = carts[userId].map(id=>products.find(p=> p.id === id));
 
