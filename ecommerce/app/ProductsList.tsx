@@ -9,7 +9,7 @@ export default function ProductList({products, initialCartProducts} : {products:
     const [cartProducts, setCartProducts] = useState(initialCartProducts)
     
     async function addToCart(productId:string){
-        const response = await fetch('https://special-spoon-pgvpvx7q66rc7596-3000.app.github.dev/api/users/2/cart',{
+        const response = await fetch(process.env.NEXT_PUBLIC_SITE_URL+'/api/users/2/cart',{
             method:'POST',
             body: JSON.stringify({
                 productId
@@ -23,7 +23,7 @@ export default function ProductList({products, initialCartProducts} : {products:
     }
 
     async function removeFromCart(productId:string){
-        const response = await fetch('https://special-spoon-pgvpvx7q66rc7596-3000.app.github.dev/api/users/2/cart',{
+        const response = await fetch(process.env.NEXT_PUBLIC_SITE_URL+'api/users/2/cart',{
             method:'DELETE',
             body: JSON.stringify({
                 productId

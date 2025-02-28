@@ -8,7 +8,7 @@ export default function ShoppingCartList({inititalCartProducts} : {inititalCartP
     const [cartProducts,setCartProducts] = useState(inititalCartProducts);
     
     async function removeFromCart(productId:string){
-        const response = await fetch('https://special-spoon-pgvpvx7q66rc7596-3000.app.github.dev/api/users/2/cart',{
+        const response = await fetch(process.env.NEXT_PUBLIC_SITE_URL+'/api/users/2/cart',{
             method:'DELETE',
             body: JSON.stringify({
                 productId
