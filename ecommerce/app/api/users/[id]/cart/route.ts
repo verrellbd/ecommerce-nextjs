@@ -70,10 +70,11 @@ export async function POST(request:NextRequest, {params}:{params:Params}) {
 
     const updatedCart = await db.collection('carts').findOneAndUpdate(
         { userId },
-        { $push: { cartIds : productId} },
+        { $push: { cartsIds : productId} },
         { upsert: true, returnDocument: 'after'}
     )
-    const cartProducts = await db.collection('products').find({ id: {$in: updatedCart.cartIds }}).toArray();
+
+    const cartProducts = await db.collection('products').find({ id: {$in: updatedCart.cartsIds }}).toArray();
     return new Response(JSON.stringify(cartProducts),{
         status:201,
         headers:{
@@ -102,7 +103,7 @@ export async function DELETE(request:NextRequest, {params}:{params:Params}) {
 
     const updatedCart = await db.collection('carts').findOneAndUpdate(
         { userId },
-        { $pull: {cartIds:productId}},
+        { $pull: {cartsIds:productId}},
         {returnDocument: 'after'}
     );
 
@@ -114,7 +115,7 @@ export async function DELETE(request:NextRequest, {params}:{params:Params}) {
             }
         })
     }
-    const cartProducts = await db.collection('products').find({ id: {$in: updatedCart.cartIds }}).toArray();
+    const cartProducts = await db.collection('products').find({ id: {$in: updatedCart.cartsIds }}).toArray();
 
     return NextResponse.json(cartProducts,{
         status:202,

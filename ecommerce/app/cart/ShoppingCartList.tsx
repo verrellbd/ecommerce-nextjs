@@ -5,7 +5,21 @@ import { Product } from "../product-data";
 import Link from "next/link";
 
 export default function ShoppingCartList({inititalCartProducts} : {inititalCartProducts: Product[]}){
-    const [cartProducts] = useState(inititalCartProducts);
+    const [cartProducts,setCartProducts] = useState(inititalCartProducts);
+    
+    async function removeFromCart(productId:string){
+        const response = await fetch('https://special-spoon-pgvpvx7q66rc7596-3000.app.github.dev/api/users/2/cart',{
+            method:'DELETE',
+            body: JSON.stringify({
+                productId
+            }),
+            headers:{
+                'Content-Type':'application/json'
+            }
+        });
+        const updatedCartProducts = await response.json();
+        setCartProducts(updatedCartProducts);
+    }
 
     return (
         <div className="container mx-auto p-8">
@@ -14,8 +28,16 @@ export default function ShoppingCartList({inititalCartProducts} : {inititalCartP
         {cartProducts.map(product =>(
             <li key={product.id} className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition duration-300">
             <Link href={`/products/${product.id}`}>
-              <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
-              <p className="text-gray-600">${product.price}</p>
+                <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
+                <p className="text-gray-600">${product.price}</p>
+                <div className="flex justify-end">
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
+                    onClick={(e) => {
+                        e.preventDefault();
+                        removeFromCart(product.id);
+                    }}>Remove to Cart
+                    </button>
+                </div>
             </Link>
             </li>
         ))}
